@@ -1,5 +1,55 @@
 #include <iostream>
 using namespace std;
+//template <typename T> // :(
+class Array {
+private:
+    string* data;
+    int capacity;
+    int size;
+    void resize(int newCapacity) {
+        string *newData = new string[newCapacity];
+        for (int i = 0; i < size; ++i) {
+            newData[i] = data[i];
+        }
+        delete[] data;
+        data = newData;
+        capacity = newCapacity;
+    }
+public:
+    Array() {
+        capacity = 4;
+        size = 0;
+        data = new string[capacity];
+    }
+    void push(string val) {
+        if (size >= capacity) {
+            resize(capacity * 2);
+        }
+        data[size++] = val;
+    }
+    string get(int index) {
+        if (index < 0 || index >= size) throw runtime_error("Out of range");
+        return data[index];
+    }
+    void set(int index, string val) {
+        if (index < 0 || index >= size) throw runtime_error("Out of range");
+        data[index] = val;
+    }
+    void pop() {
+        if (size == 0) throw runtime_error("Empty");
+        size--;
+    }
+    int getSize() {return size;}
+    void print() {
+        for (int i = 0; i < size; ++i) {
+            cout << data[i] << " ";
+        }
+        cout << endl;
+    }
+    ~Array() {
+        delete[] data;
+    }
+};
 
 class Node {
 public:
@@ -113,7 +163,7 @@ bool isRightAs(string op) {
     return op == "^";
 }
 
-void toRPN(const char* expression, string output[100], int& outPos) {
+void toRPN(const string& expression, string output[100], int& outPos) {
     Stack stack;
     outPos = 0;
     int i = 0;
@@ -123,7 +173,7 @@ void toRPN(const char* expression, string output[100], int& outPos) {
             continue;
         }
         if (isdigit(expression[i])) {
-            string number; // since number is a sequence of digits ig
+            string number; // since number is a sequence of digits
             while (isdigit(expression[i])) {
                 number += expression[i++];
 
@@ -134,11 +184,14 @@ void toRPN(const char* expression, string output[100], int& outPos) {
             string trigFunc;
             while (isalpha(expression[i])) {
                 trigFunc += expression[i++];
-                if (trigFunc == "cos" || trigFunc == "sin") {
-                    stack.pushStack(trigFunc);
-                }
-                else {throw runtime_error("Ne sinus i ne cosinus bratan");}
             }
+        
+            if (trigFunc == "sin" || trigFunc == "cos") {
+                stack.pushStack(trigFunc);
+            } else {
+                throw runtime_error("Ne sinus i ne cosinus bratan");
+            }
+            continue;
         }
         else if (expression[i] == '(') {
             stack.pushStack("(");
@@ -161,7 +214,7 @@ void toRPN(const char* expression, string output[100], int& outPos) {
         else {
             string oper(1, expression[i]);
             while (!stack.isEmpty() && (isOperator(stack.top()) || isFunction(stack.top()) && (((!isRightAs(oper) && priority(oper) <= priority(stack.top())) ||
-            (isRightAs(oper) && priority(oper) <  priority(stack.top())))))) {
+            (isRightAs(oper) && priority(oper) <  priority(stack.top())))))) { // fantasticheskoe uslovie cenoi v 20 minut
                 output[outPos++] = stack.top();
                 stack.pop();
             }
@@ -181,15 +234,19 @@ void toRPN(const char* expression, string output[100], int& outPos) {
 
 
 int main() {
-    LinkedList list;
-    const char *expression = "3 + 4 * 2 / (1 - 5) ^ 2 ^ 3";
+    //string expression = "3 + 4 * 2 / (1 - 5) ^ 2 ^ 3";
+    //string test1 = "cos (4) + 4 * 23 - 1 + (1 - 5)";
+    //string test2 = "sin(3 + 4 * cos(2))"; нужны пробелы
+    string expr;
+    //cin >> expr;
+    getline(cin, expr);
     string output[100];
     int count = 0;
-    toRPN(expression, output, count);
+    toRPN(expr, output, count);
     cout << "RPN" << endl;
     for (int i = 0; i < count; ++i) {
         cout << output[i] << " ";
     }
-
+    cout << endl;
     return 0;
 }
