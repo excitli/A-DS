@@ -198,14 +198,14 @@ void toRPN(const string& expression, string output[100], int& outPos) {
             i++;
         }
         else if (expression[i] == ')') {
-            while (stack.top() != "(" && !stack.isEmpty()) {
+            while (!stack.isEmpty() && stack.top() != "(") {
                 output[outPos++] = stack.top();
                 stack.pop();
             }
-            if (stack.top() == "(" && !stack.isEmpty()) {
+            if (!stack.isEmpty() && stack.top() == "(") {
                 stack.pop();
             }
-            if (isFunction(stack.top()) && !stack.isEmpty()) {
+            if (!stack.isEmpty() && isFunction(stack.top()) ) {
                 output[outPos++] = stack.top();
                 stack.pop();
             }
