@@ -1,0 +1,16 @@
+# ninja log v6
+16	127	7793851748582236	lab1_autogen/timestamp	6db4d24c5213c920
+354	628	7787880261951561	CMakeFiles/lab1.dir/lab1_autogen/mocs_compilation.cpp.obj	244d2f9f89b8c4ba
+16	127	7793851748582236	lab1_autogen/mocs_compilation.cpp	6db4d24c5213c920
+124	810	7788814169009649	CMakeFiles/lab1.dir/main.cpp.obj	62aa512154c8daf6
+16	127	7793851748582236	C:/Users/stpow/Documents/qt_oop/labs/lab1/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/lab1_autogen/timestamp	6db4d24c5213c920
+16	127	7793851748582236	C:/Users/stpow/Documents/qt_oop/labs/lab1/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/lab1_autogen/mocs_compilation.cpp	6db4d24c5213c920
+121	901	7789722613305787	CMakeFiles/lab1.dir/tapplication.cpp.obj	c82b58182e534866
+129	1026	7793851749702439	CMakeFiles/lab1.dir/tarray.cpp.obj	99dff4b3bd09f789
+1026	1287	7793851758679019	lab1.exe	5ca8868ef825a3ca
+22	122	7793853487274750	lab1_autogen/timestamp	6db4d24c5213c920
+22	122	7793853487274750	lab1_autogen/mocs_compilation.cpp	6db4d24c5213c920
+22	122	7793853487274750	C:/Users/stpow/Documents/qt_oop/labs/lab1/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/lab1_autogen/timestamp	6db4d24c5213c920
+22	122	7793853487274750	C:/Users/stpow/Documents/qt_oop/labs/lab1/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/lab1_autogen/mocs_compilation.cpp	6db4d24c5213c920
+124	1007	7793853488289929	CMakeFiles/lab1.dir/tarray.cpp.obj	99dff4b3bd09f789
+1007	1215	7793853497126491	lab1.exe	5ca8868ef825a3ca
