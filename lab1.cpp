@@ -213,8 +213,8 @@ void toRPN(const string& expression, string output[100], int& outPos) {
         }
         else {
             string oper(1, expression[i]);
-            while (!stack.isEmpty() && (isOperator(stack.top()) || isFunction(stack.top()) && (((!isRightAs(oper) && priority(oper) <= priority(stack.top())) ||
-            (isRightAs(oper) && priority(oper) <  priority(stack.top())))))) { // fantasticheskoe uslovie cenoi v 20 minut
+            while (!stack.isEmpty() && (isOperator(stack.top()) || isFunction(stack.top())) && ((!isRightAs(oper) && priority(oper) <= priority(stack.top())) ||
+            (isRightAs(oper) && priority(oper) <  priority(stack.top())))) { // fantasticheskoe uslovie cenoi v 20 minut
                 output[outPos++] = stack.top();
                 stack.pop();
             }
