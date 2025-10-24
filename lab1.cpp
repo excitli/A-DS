@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
 //template <typename T> // :(
+
 class Array {
 private:
     string* data;
@@ -148,6 +149,7 @@ int priority(string op) {
     if (op == "/" || op == "*") return 2;
     if (op == "^") return 3;
     if (op == "sin" || op == "cos") return 4;
+    return -1;
 }
 
 bool isOperator(string token) {
