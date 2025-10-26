@@ -169,7 +169,7 @@ void merge(Array& arr, int left, int right, int mid) {
     for (int i = 0; i < len2; i++) rightArr.push_back(arr[mid + 1 + i]);
 
     int i = 0, j = 0, k = left;
-    int gth = 10; // порог "галопа"
+    int gth = 10; 
     int countLeft = 0, countRight = 0;
 
     while (i < len1 && j < len2) {
@@ -280,7 +280,15 @@ void timsort(Array& arr) {
 
 int main() {
     Array arr1;
-    for (int i = 0; i < 10000; ++i) {arr1.push_back(rand() % 10000 + 1);}
+    int sizeAr;
+    int val;
+    cout << "Size?: " << endl;
+    cin >> sizeAr;
+    for (int i = 0; i < sizeAr; ++i) {
+        cin >> val;
+        arr1.push_back(val);
+    }
+    //for (int i = 0; i < 10000; ++i) {arr1.push_back(rand() % 10000 + 1);}
     timsort(arr1);
     arr1.print();
     // vector<int> arr1;
