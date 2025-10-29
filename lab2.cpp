@@ -111,7 +111,7 @@ int gallopLeft(int key, Array& arr, int startVal, int length) {
         int maxOffset = length;
         while (offset < maxOffset && key > arr[startVal + offset]) {
             lastOffset = offset;
-            offset = (offset << 1) + 1;
+            offset = (offset << 1) + 1; // offset = offset * pow(2, i) + 1;
             if (offset <= 0) offset = maxOffset;
         }
         if (offset > maxOffset) offset = maxOffset;
@@ -241,33 +241,41 @@ void timsort(Array& arr) {
     int n = arr.size();
     if (n < 2) return;
     int minRun = getMinRunSize(n);
-
+    bool isSorted = true;
     Array runStart;
     Array runLen;
+    for (size_t i = 1; i < arr.size(); ++i) {
+        if (arr[i] < arr[i - 1]) {
+            isSorted = false;
+        }
+    }
+    if (isSorted) {
+        cout << "Already sorted" << endl;
+        return;
+    }
 
     int i = 0;
     while (i < n) {
         int runStartPos = i;
         int runEnd = i + 1;
-
         if (runEnd < n && arr[runEnd] < arr[runEnd - 1]) {
             while (runEnd < n && arr[runEnd] < arr[runEnd - 1]) runEnd++;
             arr.reverse(runStartPos, runEnd - 1);
         } else {
             while (runEnd < n && arr[runEnd] >= arr[runEnd - 1]) runEnd++;
         }
-
         int runLength = runEnd - runStartPos;
         if (runLength < minRun) {
             int forcedEnd = min(runStartPos + minRun, n);
+            cout << "runLength: " << runLength<< endl;
+            cout << "Starting insertion" << endl;
             insertionSort(arr, runStartPos, forcedEnd - 1);
-            runLength = forcedEnd - runStartPos;
+            runLength = forcedEnd - runStartPos;    
             runEnd = forcedEnd;
         }
-
         runStart.push_back(runStartPos);
         runLen.push_back(runLength);
-
+        runLen.print();
         mergeRun(arr, runStart, runLen);
         i = runEnd;
     }
