@@ -218,7 +218,7 @@ void mergeTop(Array& arr, Array& runStackStart, Array& runStackLen, int i) {
 
 
 void mergeRun(Array& arr, Array& runStackStart, Array& runStackLen) {
-    while (runStackLen.size() > 0) {
+    while (runStackLen.size() > 1) {
         int n = runStackLen.size();
         bool merged = false;
 
