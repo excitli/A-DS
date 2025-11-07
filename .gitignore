@@ -4,3 +4,6 @@
 !lab3.cpp
 !dynarr.h
 !.gitignore
+!parseTree.h
+!node.h
+!tree.txt
