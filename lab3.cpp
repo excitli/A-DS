@@ -33,42 +33,30 @@ public:
     
 
     void transplant(Node* u, Node* v) {
-        if (u->parent == nullptr)
-            root = v;
-        else if (u == u->parent->leftSon)
-            u->parent->leftSon = v;
-        else
-            u->parent->rightSon = v;
-        if (v)
-            v->parent = u->parent;
+        if (u->parent == nullptr) root = v;
+        else if (u == u->parent->leftSon) u->parent->leftSon = v;
+        else u->parent->rightSon = v;
+        if (v) v->parent = u->parent;
     }
     void leftRotate(Node* x) {
         Node* y = x->rightSon;
         x->rightSon = y->leftSon;
-        if (y->leftSon)
-            y->leftSon->parent = x;
+        if (y->leftSon) y->leftSon->parent = x;
         y->parent = x->parent;
-        if (x->parent == nullptr)
-            root = y;
-        else if (x == x->parent->leftSon)
-            x->parent->leftSon = y;
-        else
-            x->parent->rightSon = y;
+        if (x->parent == nullptr) root = y;
+        else if (x == x->parent->leftSon) x->parent->leftSon = y;
+        else x->parent->rightSon = y;
         y->leftSon = x;
         x->parent = y;
     }
     void rightRotate(Node* x) {
         Node* y = x->leftSon;
         x->leftSon = y->rightSon;
-        if (y->rightSon)
-            y->rightSon->parent = x;
+        if (y->rightSon) y->rightSon->parent = x;
         y->parent = x->parent;
-        if (x->parent == nullptr)
-            root = y;
-        else if (x == x->parent->rightSon)
-            x->parent->rightSon = y;
-        else
-            x->parent->leftSon = y;
+        if (x->parent == nullptr) root = y;
+        else if (x == x->parent->rightSon) x->parent->rightSon = y;
+        else x->parent->leftSon = y;
         y->rightSon = x;
         x->parent = y;
     }
@@ -368,15 +356,16 @@ void convertTree() {
     cout << "Binary tree depth search" << endl;
     BT.dfs(BT.root);
     cout << endl;
-
-    cout << "RBT tree (inorder)" << endl;
-    RBT.inorder(RBT.root);
     cout << endl;
 
     cout << "RBT tree (level order)" << endl;
     RBT.levelOrder();
     cout << endl;
 
+    cout << "RBT tree (inorder)" << endl;
+    RBT.inorder(RBT.root);
+    cout << endl;
+    
     cout << "RBT tree (post order)" << endl;
     RBT.dfs_rb(RBT.root);
     cout << endl;
