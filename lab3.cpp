@@ -1,7 +1,60 @@
 using namespace std;
 #include <iostream>
-#include "parseTree.h"
 #include "fstream"
+
+
+class Node {
+public:
+    int data;
+    Node* parent;
+    Node* leftSon;
+    Node* rightSon;
+    bool color; // true - red, false - black;
+    Node(int val) {
+        data = val; 
+        parent = nullptr;
+        leftSon = nullptr;
+        rightSon = nullptr;
+        color = false;
+    }
+};
+
+
+void skipSpaces(const string& arr, int& pos) {
+    while (pos < arr.size() && isspace(arr[pos])) pos++;
+}
+
+Node* parse(const string& arr, int& pos) {
+    skipSpaces(arr, pos);
+    if (pos >= arr.size() || arr[pos] != '(') return nullptr;
+    pos++;
+    skipSpaces(arr, pos);
+
+    bool negative = false;
+    int val = 0;
+    if (arr[pos] == '-') {
+        negative = true;
+        pos++;
+    }
+    while (pos < arr.size() && isdigit(arr[pos])) {
+        val = val * 10 + (arr[pos] - '0');
+        pos++;
+    }
+    if (negative) val = -val;
+    Node* node = new Node(val);
+    skipSpaces(arr, pos);
+    if (pos < arr.size() && arr[pos] == '(') {
+        node -> leftSon = parse(arr, pos);
+    }
+    skipSpaces(arr, pos);
+    if (pos < arr.size() && arr[pos] == '(') {
+        node -> rightSon = parse(arr, pos);
+    }
+    if (pos < arr.size() && arr[pos] == ')') {pos++;}
+    return node;
+}
+
+
 
 class BinaryTree {
 public:
@@ -365,7 +418,7 @@ void convertTree() {
     cout << "RBT tree (inorder)" << endl;
     RBT.inorder(RBT.root);
     cout << endl;
-    
+
     cout << "RBT tree (post order)" << endl;
     RBT.dfs_rb(RBT.root);
     cout << endl;
