@@ -1,0 +1,3 @@
+/Users/watamote/Desktop/OOP/ADS/trees/CMakeFiles/lab3.dir
+/Users/watamote/Desktop/OOP/ADS/trees/CMakeFiles/edit_cache.dir
+/Users/watamote/Desktop/OOP/ADS/trees/CMakeFiles/rebuild_cache.dir
