@@ -78,6 +78,25 @@ public:
         dfs(node->leftSon);
         dfs(node->rightSon);
     }
+
+    void levelOrderBT() {
+        if (!root) return;
+
+        std::queue<Node*> q;
+        q.push(root);
+
+        while (!q.empty()) {
+            Node* current = q.front();
+            q.pop();
+            //std::cout << current->data << (current->color ? "R" : "B") << " ";
+            std:: cout << current -> data << " ";
+            if (current->leftSon)
+                q.push(current->leftSon);
+            if (current->rightSon)
+                q.push(current->rightSon);
+        }
+        std::cout << std::endl;
+    }
 };
 
 class RBTree{
@@ -201,7 +220,7 @@ public:
             if (p == p->parent->leftSon) {
                 Node* brother = p->parent->rightSon;
     
-                if (brother && brother->color == true) {
+                if (brother && brother->color == true) { // брат красный = перекрашиваем брата родителя + левый поворот
                     brother->color = false;
                     p->parent->color = true;
                     leftRotate(p->parent);
@@ -209,18 +228,18 @@ public:
                 }
     
                 if ((!brother->leftSon  || brother->leftSon->color == false) &&
-                    (!brother->rightSon || brother->rightSon->color == false)) {
+                    (!brother->rightSon || brother->rightSon->color == false)) { // брат черный и оба сына отсутствуют иил черные: брата в красный, поднимаем p и в начало цикла
                     if (brother) brother->color = true;
                     p = p->parent;
-                } else {
-                    if (!brother->rightSon || brother->rightSon->color == false) {
+                } else { // брат черный но есть красный ребенок (хотя бы 1): 
+                    if (!brother->rightSon || brother->rightSon->color == false) { // правого сына нет или черный: красим левого в черный, брата в красный, правый поворот, обновляем указатель
                         if (brother->leftSon)
                             brother->leftSon->color = false;
                         brother->color = true;
                         rightRotate(brother);
                         brother = p->parent->rightSon;
                     }
-                    brother->color = p->parent->color;
+                    brother->color = p->parent->color; // правый сын брата красный: цвет родителя -> цвет брата, родитель черный, правого сына брата в черный, ЛПоворот, p = root.
                     p->parent->color = false;
                     if (brother->rightSon)
                         brother->rightSon->color = false;
@@ -228,7 +247,7 @@ public:
                     p = root;
                 }
             } 
-            else {
+            else { 
                 Node* brother = p->parent->leftSon;
     
                 if (brother && brother->color == true) {
@@ -266,11 +285,11 @@ public:
 
 
     void fixInsertion(Node* t) {
-        while (t != root && t->parent->color == true) { 
+        while (t != root && t->parent->color == true) {  // пока два красных узла подряд
             Node* parent = t->parent;
             Node* grandparent = parent->parent;
     
-            if (parent == grandparent->leftSon) { 
+            if (parent == grandparent->leftSon) {  // дядя красный -> делаем деда черным
                 Node* uncle = grandparent->rightSon;
     
                 if (uncle && uncle->color == true) { 
@@ -279,18 +298,18 @@ public:
                     grandparent->color = true;
                     t = grandparent;
                 } else {
-                    if (t == parent->rightSon) { 
+                    if (t == parent->rightSon) { // дядя черный, t - праывй сын, мы короче делаем ветку прямой 
                         t = parent;
                         leftRotate(t);
                         parent = t->parent;
                         grandparent = parent->parent;
                     }
-                    parent->color = false;
+                    parent->color = false; // дядя черный t - левый сын: дядя красный и правый поворот
                     grandparent->color = true;
                     rightRotate(grandparent);
                 }
             } else {
-                Node* uncle = grandparent->leftSon;
+                Node* uncle = grandparent->leftSon; //симметрично
     
                 if (uncle && uncle->color == true) { 
                     parent->color = false;
@@ -359,6 +378,7 @@ public:
             Node* current = q.front();
             q.pop();
             std::cout << current->data << (current->color ? "R" : "B") << " ";
+
             if (current->leftSon)
                 q.push(current->leftSon);
             if (current->rightSon)
@@ -380,20 +400,72 @@ string readTree() {
     return ")";
 }
 
-void traverseInsert(Node* node, RBTree& rbt) {
+void traverseInsert(Node* node, RBTree& rbt) { //postorder
     if (!node) return;
-    rbt.insert(node -> data);
+    //rbt.insert(node -> data);
     traverseInsert(node -> leftSon, rbt);
+    rbt.insert(node -> data);
     traverseInsert(node -> rightSon, rbt);
 
 }
 
 
-void convertTree() {
+// void convertTree() {
+//     string treeStr = readTree();
+//     if (treeStr.empty()) {
+//         cout << "TreeStr string is empty";
+//         return;
+//     }
+//     BinaryTree BT;
+//     RBTree RBT;
+//     int pos = 0;
+//     BT.root = parse(treeStr, pos);
+
+//     if (!BT.root) {
+//         cout << "Invalid skobochnaya form";
+//         return;
+//     }
+
+//     traverseInsert(BT.root, RBT);
+
+//     cout << "Binary tree depth search" << endl;
+//     BT.dfs(BT.root);
+//     cout << endl;
+//     cout << endl;
+
+
+//     cout << "Binary tree level order" << endl;
+//     BT.levelOrderBT();
+//     cout << endl;
+    
+
+//     cout << "RBT tree (level order)" << endl;
+//     RBT.levelOrder();
+//     cout << endl;
+
+//     cout << "RBT tree (inorder)" << endl;
+//     RBT.inorder(RBT.root);
+//     cout << endl;
+
+//     cout << "RBT tree (post order)" << endl;
+//     RBT.dfs_rb(RBT.root);
+//     cout << endl;
+
+//     cout << "RBT tree (iterative preorder)" << endl;
+//     RBT.iterativePreorder(RBT.root);
+//     cout << endl;
+
+//     cout << "RBT tree (preorder)" << endl;
+//     RBT.preorder(RBT.root);
+//     cout << endl;
+// }
+
+
+int main() {
     string treeStr = readTree();
     if (treeStr.empty()) {
         cout << "TreeStr string is empty";
-        return;
+        return -1;
     }
     BinaryTree BT;
     RBTree RBT;
@@ -402,7 +474,7 @@ void convertTree() {
 
     if (!BT.root) {
         cout << "Invalid skobochnaya form";
-        return;
+        return -1;
     }
 
     traverseInsert(BT.root, RBT);
@@ -411,6 +483,12 @@ void convertTree() {
     BT.dfs(BT.root);
     cout << endl;
     cout << endl;
+
+
+    cout << "Binary tree level order" << endl;
+    BT.levelOrderBT();
+    cout << endl;
+    
 
     cout << "RBT tree (level order)" << endl;
     RBT.levelOrder();
@@ -431,33 +509,59 @@ void convertTree() {
     cout << "RBT tree (preorder)" << endl;
     RBT.preorder(RBT.root);
     cout << endl;
-}
 
 
-int main() {
-    // BinaryTree tree;
-    // string input = "(8 (9 (5)) (1))";
-    // int pos = 0;
-    // tree.root = parse(input, pos);
-    // cout << tree.root -> data;
-    // tree.dfs(tree.root);
-    // RBTree t;
-    // t.insert(10);
-    // t.insert(5);
-    // t.insert(15);
-    // t.insert(3);
-    // t.insert(7);
-    // t.insert(0);
-    // t.insert(12);
-    // t.insert(11);
-    // t.insert(9);
-    // t.insert(6);
-    // t.remove(10);
-    // t.inorder(t.root);
-    // cout << endl;
-    // cout << t.root -> data;
-    // cout << t.root -> color;
-    convertTree();
-    
+
+    bool running = true;
+    while (running) {
+        int ch;
+        puts("1. Insert");
+        puts("2. Delete by value");
+        puts("3. Search");
+        puts("4. Display");
+        puts("0. Quit");
+        puts(">>>>>");
+        cin >> ch;
+        switch(ch) {
+            case 1: {
+                int val;
+                cout << "Input a val to insert" << endl;
+                cin >> val;
+                RBT.insert(val);
+                break;
+            }
+            case 2: {
+                int val;
+                cout << "Input a val to delete" << endl;
+                cin >> val;
+                RBT.remove(val);
+                break;
+            }
+            case 3: {
+                int val;
+                cout << "input a val to search for" << endl;
+                cin >> val;
+                Node* node = RBT.root;
+                try {
+                    node = RBT.search(val);
+                    if (node -> data == val) cout << "Exits" << endl;
+                }
+                catch (std::exception &e) {cout << "Does not exits" << endl;} 
+                break;
+            }
+            case 4: {
+                RBT.levelOrder();
+                cout << endl;
+                break;
+            }
+            case 0: {
+                running = false;
+                break;
+            }
+
+                
+        }
+    }
+    return 0;
 
 };
