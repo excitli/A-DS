@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <queue>
 
 void dgs_recursive(int u, EdgeArray& edges, bool* visited, string* names) {
     visited[u] = true;
